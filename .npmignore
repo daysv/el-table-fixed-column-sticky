@@ -1,0 +1,17 @@
+ .git
+.github
+node_modules
+.DS_Store
+*.log
+.editorconfig
+.eslintrc
+.eslintignore
+.prettierrc
+rollup.config.js
+babel.config.js
+jest.config.js
+tests/
+examples/
+coverage/
+.vscode/
+.idea/

@@ -1,0 +1,53 @@
+{
+  "name": "el-table-fixed-column-sticky",
+  "version": "2.15.14",
+  "description": "An el-table component inherit from Element UI el-table, use css sticky to implement fixed column",
+  "main": "dist/el-table-fixed-column-sticky.cjs.js",
+  "module": "dist/el-table-fixed-column-sticky.esm.js",
+  "unpkg": "dist/el-table-fixed-column-sticky.umd.js",
+  "files": [
+    "dist",
+    "src",
+    "index.js"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "el-table",
+    "fixed",
+    "column",
+    "sticky",
+    "element-ui",
+    "element-ui-table"
+  ],
+  "author": "cfancc",
+  "license": "MIT",
+  "peerDependencies": {
+    "element-ui": "^2.15.0",
+    "vue": "^2.6.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cfancc/el-table-fixed-column-sticky.git"
+  },
+  "homepage": "https://github.com/cfancc/el-table-fixed-column-sticky",
+  "devDependencies": {
+    "@babel/core": "^7.22.0",
+    "@babel/preset-env": "^7.22.0",
+    "@rollup/plugin-alias": "^5.0.0",
+    "@rollup/plugin-babel": "^6.0.0",
+    "@rollup/plugin-commonjs": "^25.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.0",
+    "@rollup/plugin-replace": "^5.0.0",
+    "@rollup/plugin-terser": "^0.4.0",
+    "babel-helper-vue-jsx-merge-props": "^2.0.3",
+    "babel-plugin-syntax-jsx": "^6.18.0",
+    "babel-plugin-transform-vue-jsx": "^3.7.0",
+    "rollup": "^3.25.0",
+    "rollup-plugin-vue": "^5.1.9",
+    "sass": "^1.69.0",
+    "vue-template-compiler": "^2.6.14"
+  }
+}
