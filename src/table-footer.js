@@ -77,6 +77,7 @@ export default {
                 colspan={column.colSpan}
                 rowspan={column.rowSpan}
                 class={[...this.getRowClasses(column, cellIndex), 'el-table__cell']}
+                style={this.getRowStyle(column, cellIndex)}
               >
                 <div class={['cell', column.labelClassName]}>{sums[cellIndex]}</div>
               </td>

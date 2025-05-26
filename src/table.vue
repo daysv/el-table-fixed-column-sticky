@@ -330,13 +330,13 @@ export default {
     }),
 
     raf(cb) {
-      if (!this.ticking) {
-        window.requestAnimationFrame(() => {
-          this.ticking = false
-          cb()
-        })
-        this.ticking = true
+      if (this.ticking) {
+        window.cancelAnimationFrame(this.ticking)
       }
+      this.ticking = window.requestAnimationFrame(() => {
+        cb()
+        this.ticking = null
+      })
     },
 
     onScroll(evt) {
@@ -381,15 +381,6 @@ export default {
         this.resizeState.width = width
         this.resizeState.height = height
         this.doLayout()
-        this.$nextTick(() => {
-          this.$refs.tableWrapper.querySelectorAll('tr').forEach((el) => {
-            const { height } = el.getBoundingClientRect()
-            const calcHeight = Math.round(height)
-            const r = `${calcHeight}px`
-            el.style.height = r
-            el.style.containIntrinsicHeight = r
-          })
-        })
       }
     },
 
@@ -629,7 +620,7 @@ $shadowRight: inset -10px 0 10px -10px rgba(0, 0, 0, 0.15) !important;
 
 .el-table {
   overflow: clip;
-
+  content-visibility: auto;
   ::v-deep {
     .fixed-column--left {
       //position: sticky !important;
@@ -743,14 +734,12 @@ $shadowRight: inset -10px 0 10px -10px rgba(0, 0, 0, 0.15) !important;
         background-color: getCssVar('header-bg-color');
       }
     }
-  }
-}
 
-// 性能优化
-.el-table {
-  content-visibility: auto;
-  tr {
-    content-visibility: auto;
+    .is-scrolling-right {
+      .fixed-column--right.is-first-column {
+        box-shadow: 0 0 0 1px var(--table-border); // fix firefox sticky table cells lose their border
+      }
+    }
   }
 }
 </style>

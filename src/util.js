@@ -400,14 +400,43 @@ export const ensurePosition = (style, key) => {
   }
 }
 
+function checkChromium() {
+  // 排除 Firefox 和 Safari
+  if (
+    navigator.userAgent.includes('Firefox') ||
+    (navigator.userAgent.includes('Safari') && !navigator.userAgent.includes('Chrome'))
+  ) {
+    return false
+  }
+
+  // Chromium 浏览器通常有这些特征
+  return (
+    window.chrome !== null &&
+    typeof window.chrome !== 'undefined' &&
+    (navigator.userAgent.includes('Chrome') || navigator.userAgent.includes('Chromium'))
+  )
+}
+
+export const isChromium = checkChromium()
+
 export const getStickyCellStyle = (direction) => {
   const scrollStyles = {}
   if (direction) {
-    scrollStyles.contain = 'layout'
-    if (direction === 'left') {
-      scrollStyles.transform = `translateX(var(--scroll-left))`
-    } else if (direction === 'right') {
-      scrollStyles.transform = `translateX(var(--scroll-right))`
+    if (isChromium) {
+      scrollStyles.contain = 'layout'
+      scrollStyles.transformStyle = 'preserve-3d'
+      if (direction === 'left') {
+        scrollStyles.transform = `translate3d(var(--scroll-left), 0, 0)`
+      } else if (direction === 'right') {
+        scrollStyles.transform = `translate3d(var(--scroll-right), 0, 0)`
+      }
+    } else {
+      scrollStyles.position = 'sticky'
+      if (direction === 'left') {
+        scrollStyles.left = `0`
+      } else if (direction === 'right') {
+        scrollStyles.right = '0'
+      }
     }
   } else {
     scrollStyles.contain = ''
