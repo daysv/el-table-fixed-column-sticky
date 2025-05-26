@@ -76,6 +76,7 @@
       ref="footerWrapper"
       v-mousewheel="handleHeaderFooterMousewheel"
       class="el-table__footer-wrapper"
+      :class="[layout.scrollX ? `is-scrolling-${scrollPosition}` : 'is-scrolling-none']"
     >
       <table-footer
         :store="store"

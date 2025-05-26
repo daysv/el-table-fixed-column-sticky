@@ -1,6 +1,6 @@
 import LayoutObserver from './layout-observer'
 import { mapStates } from './store/helper'
-import { getFixedColumnsClass } from './util'
+import { getFixedColumnsClass, getStickyCellStyle, isFixedColumn } from './util'
 
 export default {
   name: 'ElTableFooter',
@@ -77,7 +77,7 @@ export default {
                 colspan={column.colSpan}
                 rowspan={column.rowSpan}
                 class={[...this.getRowClasses(column, cellIndex), 'el-table__cell']}
-                style={this.getRowStyle(column, cellIndex)}
+                style={this.getCellStyle(column, cellIndex)}
               >
                 <div class={['cell', column.labelClassName]}>{sums[cellIndex]}</div>
               </td>
@@ -141,6 +141,21 @@ export default {
         classes.push('is-leaf')
       }
       return classes
+    },
+    getCellStyle(rowIndex, columnIndex, row, column) {
+      const cellStyle = this.table.cellStyle ?? {}
+      let cellStyles = cellStyle ?? {}
+      if (typeof cellStyle === 'function') {
+        cellStyles = cellStyle.call(null, {
+          rowIndex,
+          columnIndex,
+          row,
+          column,
+        })
+      }
+
+      const { direction } = isFixedColumn(columnIndex, this.fixed, this.store)
+      return { ...cellStyles, ...getStickyCellStyle(direction) }
     },
   },
 }
