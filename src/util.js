@@ -419,9 +419,13 @@ function checkChromium() {
 
 export const isChromium = checkChromium()
 
-export const getStickyCellStyle = (direction) => {
+export const getStickyCellStyle = (index, fixed, store, realColumns, hasGutter) => {
+  const { direction, start = 0, after = 0 } = isFixedColumn(index, fixed, store, realColumns)
+  const gutterWidth = 6
+
   const scrollStyles = {}
   if (direction) {
+    scrollStyles.zIndex = '4'
     if (isChromium) {
       scrollStyles.contain = 'layout'
       scrollStyles.transformStyle = 'preserve-3d'
@@ -431,11 +435,21 @@ export const getStickyCellStyle = (direction) => {
         scrollStyles.transform = `translate3d(var(--scroll-right), 0, 0)`
       }
     } else {
+      // 火狐等其他浏览器
       scrollStyles.position = 'sticky'
+
+      const { columns } = store.states
       if (direction === 'left') {
-        scrollStyles.left = `0`
+        scrollStyles.left = `${columns.slice(0, start).reduce(getOffset, 0)}px`
       } else if (direction === 'right') {
-        scrollStyles.right = '0'
+        let right = columns
+          .slice(after + 1)
+          .reverse()
+          .reduce(getOffset, 0)
+        if (hasGutter) {
+          right += gutterWidth
+        }
+        scrollStyles.right = `${right}px`
       }
     }
   } else {

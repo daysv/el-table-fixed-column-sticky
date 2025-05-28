@@ -272,14 +272,10 @@ export default {
         })
       }
 
-      const { direction } = isFixedColumn(
-        columnIndex,
-        column.fixed,
-        this.store,
-        row,
-        this.hasGutter
-      )
-      return { ...headerCellStyles, ...getStickyCellStyle(direction) }
+      return {
+        ...headerCellStyles,
+        ...getStickyCellStyle(columnIndex, column.fixed, this.store, row, this.hasGutter),
+      }
     },
 
     getHeaderCellClass(rowIndex, columnIndex, row, column) {

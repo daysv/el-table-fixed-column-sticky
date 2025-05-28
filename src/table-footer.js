@@ -154,8 +154,7 @@ export default {
         })
       }
 
-      const { direction } = isFixedColumn(columnIndex, this.fixed, this.store)
-      return { ...cellStyles, ...getStickyCellStyle(direction) }
+      return { ...cellStyles, ...getStickyCellStyle(columnIndex, this.fixed, this.store) }
     },
   },
 }
